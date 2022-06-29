@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TodoListController;
 use Illuminate\Support\Facades\Route;
 
 route::apiResource('todo-list', TodoListController::class);
+
+Route::get('task', [TaskController::class, 'index'])
+->name('task.index');
 
 // Route::get('todo-list',[TodoListController::class, 'index'])
 // ->name('todo-list.index');
