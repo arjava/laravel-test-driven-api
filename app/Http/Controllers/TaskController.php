@@ -10,14 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 class TaskController extends Controller
 {
     public function index(TodoList $todo_list){
-        $tasks = Task::where(['todo_list_id' => $todo_list->id])->get();
+        $tasks = $todo_list->tasks;
         return response($tasks);
     }
 
     public function store(Request $request, TodoList $todo_list){
-        $request['todo_list_id'] = $todo_list->id;
-        $task = Task::create($request->all());
-        return $task;
+        return $todo_list->tasks()->create($request->all());
     }
 
     public function destroy(Task $task){
