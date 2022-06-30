@@ -6,8 +6,17 @@ use Illuminate\Support\Facades\Route;
 
 route::apiResource('todo-list', TodoListController::class);
 
-Route::get('task', [TaskController::class, 'index'])
-->name('task.index');
+route::apiResource('todo-list.task', TaskController::class)
+->except('show')
+->shallow();
+// Route::get('task', [TaskController::class, 'index'])
+// ->name('task.index');
+
+// Route::post('task', [TaskController::class, 'store'])
+// ->name('task.store');
+
+// Route::delete('task/{task}', [TaskController::class, 'destroy'])
+// ->name('task.destroy');
 
 // Route::get('todo-list',[TodoListController::class, 'index'])
 // ->name('todo-list.index');
