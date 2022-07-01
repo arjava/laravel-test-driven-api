@@ -6,11 +6,13 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TodoListController;
 use Illuminate\Support\Facades\Route;
 
-route::apiResource('todo-list', TodoListController::class);
+Route::middleware('auth:sanctum')->group(function(){
+    route::apiResource('todo-list', TodoListController::class);
 
-route::apiResource('todo-list.task', TaskController::class)
-->except('show')
-->shallow();
+    route::apiResource('todo-list.task', TaskController::class)
+    ->except('show')
+    ->shallow();
+});
 
 Route::post('/register', RegisterController::class)
 ->name('user.register');

@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\TodoList;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class TodoListTest extends TestCase
@@ -15,6 +17,7 @@ class TodoListTest extends TestCase
     public function setup():void
     {
         parent::setUp();
+        $this->authUser();
         $this->list = $this->createTodoList(['name' => 'my list']);
     }
     
@@ -29,6 +32,7 @@ class TodoListTest extends TestCase
         // action / perform
 
         // dd(route('todo-list.store'));
+        
         $response = $this->getJson(route('todo-list.index'));
         // dd($response->json()[0]['name]);
 
