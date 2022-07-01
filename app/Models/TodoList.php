@@ -10,7 +10,7 @@ class TodoList extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id'];
 
     //use delete from laravel relation
     // public static function boot(){
