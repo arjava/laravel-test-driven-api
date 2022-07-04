@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function todo_lists(): HasMany{
         return $this->hasMany(TodoList::class);
     }
+    
+    public function labels(): HasMany{
+        return $this->hasMany(Label::class);
+    }
 }
