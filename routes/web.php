@@ -29,7 +29,8 @@ Route::get('/drive', function(){
         'https://www.googleapis.com/auth/drive.file'
     ]);
     $url = $client->createAuthUrl();
-    return redirect($url);
+    // return redirect($url);
+    return $url;
 
 });
 

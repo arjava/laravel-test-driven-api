@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LabelController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TodoListController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,9 @@ Route::middleware('auth:sanctum')->group(function(){
     ->shallow();
 
     route::apiResource('label', LabelController::class);
+
+    route::get('/service/connect/{service}', [ServiceController::class, 'connect'])
+    ->name('service.connect');
 });
 
 Route::post('/register', RegisterController::class)
