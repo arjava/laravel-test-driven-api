@@ -26,7 +26,7 @@ class WebServiceController extends Controller
     }
 
     public function callback(Request $request){
-        $client = new Client();
+        $client = app(Client::class);
 
         $config = config('services.google-drive');
         $client->setClientId($config['id']);
