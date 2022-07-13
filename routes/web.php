@@ -29,8 +29,7 @@ Route::get('/drive', function(){
         'https://www.googleapis.com/auth/drive.file'
     ]);
     $url = $client->createAuthUrl();
-    // return redirect($url);
-    return $url;
+    return redirect($url);
 
 });
 
@@ -46,7 +45,7 @@ Route::get('/google-drive/callback', function(){
 
 Route::get('upload', function(){
     $client = new Client();
-    $access_token = 'ya29.a0AVA9y1sJcgaQbvSxJ9hpq8ZQDYH6YD1M6afnfzmmoRMQ81w8IGcKkBbFmBT7kwCnMrUmDZsE2fBi5_O_rH14MpI3b23N0z9N2jTuiq_nSJlIsEmt5Gjn8ICAXoKS2mBr5ysKfNzWeel1ReRyR6QcKTiLayjA';
+    $access_token = 'ya29.a0AVA9y1ut4gQ2uif469qIvP83Sz_VZ4ty9GByOnAti9MZo2ScgLbbOwSkp4E-hUHDp1JdLcSn8bFMyHkWcat7lot2NqRA2YD2DQA3DD9wOHCrwQQ2vpq3O-Hin7yAd8UMaI14bB0K2a-jsm3luofs44KatXCG';
 
     $client->setAccessToken($access_token);
     $service = new Google\Service\Drive($client);
@@ -69,4 +68,5 @@ Route::get('upload', function(){
             'uploadType' => 'multipart'
         )
         );
+    return response(['message'=>'Sukses Uploaded']);
 });
