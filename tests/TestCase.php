@@ -6,6 +6,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TodoList;
 use App\Models\User;
+use App\Models\WebService;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
@@ -39,5 +40,9 @@ abstract class TestCase extends BaseTestCase
 
     public function createLabel($args = []){
         return Label::factory()->create($args);
+    }
+    
+    public function createWebService($args = []){
+        return WebService::factory()->create($args);
     }
 }
