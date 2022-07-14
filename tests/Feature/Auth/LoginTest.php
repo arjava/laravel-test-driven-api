@@ -15,7 +15,7 @@ class LoginTest extends TestCase
         $user = $this->createUser();;
         $response = $this->postJson(route('user.login'),[
             'email' => $user->email,
-            'password' => 'password'
+            'password' => 'secret'
         ])->assertOk();
 
         // dd($response->json());

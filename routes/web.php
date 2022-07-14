@@ -34,13 +34,14 @@ Route::get('/drive', function(){
 });
 
 Route::get('/google-drive/callback', function(){
-    $client = new Client();
-    $client->setClientId('633460834457-eedh0g6duhdu3817g0lihte05b1soh2v.apps.googleusercontent.com');
-    $client->setClientSecret('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');
-    $client->setRedirectUri('http://localhost:8000/google-drive/callback');
-    $code = request('code');
-    $access_token = $client->fetchAccessTokenWithAuthCode($code);
-    return $access_token;
+    // $client = new Client();
+    // $client->setClientId('633460834457-eedh0g6duhdu3817g0lihte05b1soh2v.apps.googleusercontent.com');
+    // $client->setClientSecret('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');
+    // $client->setRedirectUri('http://localhost:8000/google-drive/callback');
+    // $code = request('code');
+    // $access_token = $client->fetchAccessTokenWithAuthCode($code);
+    // return $access_token;
+    return request('code');
 });
 
 Route::get('upload', function(){
@@ -59,7 +60,7 @@ Route::get('upload', function(){
         fclose($fh);
     }
 
-    $file->setName('Hahay Dunia');
+    $file->setName('HahayDunia.zip');
     $service->files->create(
         $file,
         array(
