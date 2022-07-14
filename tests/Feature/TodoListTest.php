@@ -36,13 +36,12 @@ class TodoListTest extends TestCase
 
         // dd(route('todo-list.store'));
         $this->createTodoList();
-        $response = $this->getJson(route('todo-list.index'));
+        $response = $this->getJson(route('todo-list.index'))->json('data');
         // dd($response->json()[0]['name]);
-
         // assertion / predict
 
-        $this->assertEquals(1,count($response->json()));
-        $this->assertEquals('my list',$response->json()[0]['name']);
+        $this->assertEquals(1,count($response));
+        $this->assertEquals('my list',$response[0]['name']);
         
     }
 
@@ -51,7 +50,7 @@ class TodoListTest extends TestCase
         // $list = TodoList::factory()->create(['name'=>'my list']);
         $response = $this->getJson(route('todo-list.show',$this->list->id))
                     ->assertOk()
-                    ->json();
+                    ->json('data');
 
         $this->assertEquals($response['name'], $this->list->name);
     }
@@ -61,7 +60,7 @@ class TodoListTest extends TestCase
         $list = TodoList::factory()->make();
         $response = $this->postJson(route('todo-list.store'),['name' => $list->name])
             ->assertCreated()
-            ->json();
+            ->json('data');
         // dd($response['name']);
         $this->assertEquals($list->name, $response['name']);
         $this->assertDatabaseHas('todo_lists', ['name' => $list->name]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoListRequest;
+use App\Http\Resources\TodoListResource;
 use App\Models\TodoList;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +14,13 @@ class TodoListController extends Controller
     {
         // $list = TodoList::whereUserId(auth()->id())->get();
         $list = auth()->user()->todo_lists;
-        return response($list);
+        return TodoListResource::collection($list);
     }
 
     public function show(TodoList $todo_list)
     {
         // $list = TodoList::findOrFail($todolist);
-        return response($todo_list);
+        return new TodoListResource($todo_list);
     }
 
     public function store(TodoListRequest $request){
@@ -30,9 +31,10 @@ class TodoListController extends Controller
         // return TodoList::create($request->all());
         // return response($list, Response::HTTP_CREATED);
         // return $list;
-        return auth()->user()
+        $todo_list =  auth()->user()
                 ->todo_lists()
                 ->create($request->validated());
+        return new TodoListResource($todo_list);
     }
 
     public function destroy(TodoList $todo_list){
@@ -43,6 +45,6 @@ class TodoListController extends Controller
     public function update(TodoListRequest $request, TodoList $todo_list){
         // $request->validate(['name' => ['required']]);
         $todo_list->update($request->all());
-        return response($todo_list);
+        return new TodoListResource($todo_list);
     }
 }

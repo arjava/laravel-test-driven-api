@@ -19,4 +19,8 @@ class Task extends Model
     public function todo_list(): BelongsTo{
         return $this->belongsTo(TodoList::class);
     }
+
+    public function label(): BelongsTo{
+        return $this->belongsTo(Label::class);
+    }
 }

@@ -50,7 +50,7 @@ class LabelTest extends TestCase
         $label = $this->createLabel(['user_id' => $this->user->id]);
         $this->createLabel();
 
-        $response = $this->getJson(route('label.index'))->assertOk()->json();
+        $response = $this->getJson(route('label.index'))->assertOk()->json('data');
 
         $this->assertEquals($response[0]['title'], $label->title);
     }
