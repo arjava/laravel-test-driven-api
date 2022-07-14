@@ -40,7 +40,7 @@ class ServiceTest extends TestCase
             // $mock->shouldReceive('setClientSecret')->once();
             // $mock->shouldReceive('setRedirectUri')->once();
             $mock->shouldReceive('fetchAccessTokenWithAuthCode')
-            ->andReturn('fake-token');
+            ->andReturn(['access_token'=>'fake-token']);
         });
 
         $res = $this->postJson(route('web-service.callback', ['code' => 'dummyCode']))
@@ -52,7 +52,7 @@ class ServiceTest extends TestCase
         // dd($webService);
         $this->assertDatabaseHas('web_services', [
             'user_id' => $this->user->id,
-            'token' => '"{\"access_token\":\"fake-token\"}"'
+            'token' => json_encode(['access_token'=>'fake-token'])
         ]);
         // $this->assertNotNull($this->user->services->first()->token);
     }
