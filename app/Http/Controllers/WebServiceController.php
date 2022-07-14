@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Models\WebService;
+use App\Services\GoogleDrive;
+use App\Services\Zipper;
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
@@ -43,43 +45,21 @@ class WebServiceController extends Controller
 
     }
 
-    public function store(Request $request, WebService $web_service, Client $client){
+    public function store(WebService $web_service, GoogleDrive $googleDrive){
 
     // fetch last 7 days of tasks
     $tasks = Task::where('created_at','>=', now()->subDays(7))->get();
-
-    // a data json file
     $jsonFileName = 'task_dump.json';
     Storage::put("/public/temp/$jsonFileName", TaskResource::collection($tasks)->toJson());
-
+    // a data json file
     // zip file from a json
-    $zip = new ZipArchive();
-    $zipFileName = storage_path('app/public/temp/' . now()->timestamp . '-task.zip');
-
-    if($zip->open($zipFileName, ZipArchive::CREATE)===true){
-        $filePath = storage_path('app/public/temp/' . $jsonFileName);
-        $zip->addFile($filePath, $jsonFileName);
-    }
-    $zip->close();
+    $zipFileName = Zipper::createZipOf($jsonFileName);
 
     $access_token = $web_service->token['access_token'];
     // $access_token = $web_service->token['access_token']['access_token'];
+    $googleDrive->uploadFile($zipFileName, $access_token);
 
-    $client->setAccessToken($access_token);
-    $service = new Drive($client);
-    $file = new DriveFile();
-
-    $fileToUpload = '';
-
-    $file->setName('HahayDunia.zip');
-    $service->files->create(
-        $file,
-        array(
-            'data'=> file_get_contents($zipFileName),
-            'mimeType' => 'application/octet-stream',
-            'uploadType' => 'multipart'
-        )
-        );
-        return response('Sukses Upload', Response::HTTP_CREATED);
+    Storage::deleteDirectory('public/temp');
+    return response('Sukses Upload', Response::HTTP_CREATED);
     }
 }
