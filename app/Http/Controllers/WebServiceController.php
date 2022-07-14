@@ -70,7 +70,7 @@ class WebServiceController extends Controller
 
     $fileToUpload = '';
 
-    $file->setName('Hahay Dunia');
+    $file->setName('HahayDunia.zip');
     $service->files->create(
         $file,
         array(
@@ -79,6 +79,6 @@ class WebServiceController extends Controller
             'uploadType' => 'multipart'
         )
         );
-        return response('Uploaded', Response::HTTP_CREATED);
+        return response('Sukses Upload', Response::HTTP_CREATED);
     }
 }
