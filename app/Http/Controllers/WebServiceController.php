@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Models\WebService;
 use Google\Client;
@@ -49,7 +50,7 @@ class WebServiceController extends Controller
 
     // a data json file
     $jsonFileName = 'task_dump.json';
-    Storage::put("/public/temp/$jsonFileName", $tasks->toJson());
+    Storage::put("/public/temp/$jsonFileName", TaskResource::collection($tasks)->toJson());
 
     // zip file from a json
     $zip = new ZipArchive();
