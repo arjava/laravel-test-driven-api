@@ -17,12 +17,14 @@ class LoginController extends Controller
         $user = User::whereEmail($request->email)->first();
 
         if(!$user || !Hash::check($request->password, $user->password)){
-            return response('Credentials not match.', Response::HTTP_UNAUTHORIZED);
+            return response(['message'=>'Credentials not match.','status'=>0], Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $user->createToken('api');
 
         return response([
+            'status' => 1,
+            'message' => 'Success',
             'token' => response(['token' => $token->plainTextToken])
         ]);
     }
